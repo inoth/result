@@ -1,9 +1,13 @@
 # result
 尝试参考rust Result错误处理方式
 
+```sh
+  go get -u github.com/inoth/result
+```
+
 ```go
 func add(a, b int) Result[int] {
-	return New(a + b, /*errors.New("some err")]*/)
+	return result.New(a + b, /*errors.New("some err")]*/)
 }
 
 var sum int
@@ -24,11 +28,11 @@ add(1, 2).Match(
 ```go
 var f *os.File
 
-f = Must(os.Open("test.txt")).Unwrap()
+f = result.Must(os.Open("test.txt")).Unwrap()
 
-f = Must(os.Open("test.txt")).Expect(errors.New("input a err"))
+f = result.Must(os.Open("test.txt")).Expect(errors.New("input a err"))
 
-Must(os.Open("test.txt")).Match(
+result.Must(os.Open("test.txt")).Match(
   func(val *os.File) {
     fmt.printf("file name %s\n",val.Name())
     f = val
